@@ -521,7 +521,7 @@ class GoogleMapPlotter(object):
                     face_alpha=point_options.get('face_alpha')
                 ))
 
-    def circle(self, lat, lng, radius, dict_info, **kwargs):
+    def circle(self, lat, lng, radius, info, **kwargs):
         '''
         Plot a circle.
 
@@ -562,7 +562,7 @@ class GoogleMapPlotter(object):
             lng,
             radius,
             _get(kwargs, 'precision', 6),
-            info=dict_info,
+            info=info,
             edge_color=_get(kwargs, ['color', 'c', 'edge_color', 'ec'], 'black'),
             edge_alpha=_get(kwargs, ['alpha', 'edge_alpha', 'ea'], 1.0),
             edge_width=_get(kwargs, ['edge_width', 'ew'], 1),
@@ -719,7 +719,7 @@ class GoogleMapPlotter(object):
             opacity=_get(kwargs, 'opacity', 1.0)
         ))
 
-    def polygon(self, lats, lngs, **kwargs):
+    def polygon(self, lats, lngs, info, **kwargs):
         '''
         Plot a polygon.
 
@@ -769,6 +769,7 @@ class GoogleMapPlotter(object):
             lats,
             lngs,
             _get(kwargs, 'precision', 6),
+            info=info,
             edge_color=_get(kwargs, ['color', 'c', 'edge_color', 'ec'], 'black'),
             edge_alpha=_get(kwargs, ['alpha', 'edge_alpha', 'ea'], 1.0),
             edge_width=_get(kwargs, ['edge_width', 'ew'], 1),

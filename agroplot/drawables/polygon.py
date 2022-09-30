@@ -1,8 +1,9 @@
 from agroplot.color import _get_hex_color
 from agroplot.utility import _format_LatLng
+from random import random
 
 class _Polygon(object):
-    def __init__(self, lats, lngs, precision, **kwargs):
+    def __init__(self, lats, lngs, precision, info, **kwargs):
         '''
         Args:
             lats ([float]): Latitudes.
@@ -30,6 +31,18 @@ class _Polygon(object):
         self._face_color = _get_hex_color(face_color) if face_color is not None else None
 
         self._face_alpha = kwargs.get('face_alpha')
+        
+        self._objectid = 'polygon_' + str(int(10e6 * random()))
+        self._text_descripcion = info.get('descripcion', None)
+        self._text_tipo = info.get('tipo', None)
+        self._text_variedad = info.get('variedad', None)
+        self._text_municipio = info.get('municipio', None)
+        self._text_poligono = info.get('poligono', None)
+        self._text_parcela = info.get('parcela', None)
+        self._text_recinto = info.get('recinto', None)
+        self._text_propietario = info.get('propietario', None)
+        self._text_extension = info.get('extension', None)
+
 
     def write(self, w):
         '''
@@ -38,9 +51,9 @@ class _Polygon(object):
         Args:
             w (_Writer): Writer used to write the polygon.
         '''
-        w.write('new google.maps.Polygon({')
+        w.write('%s = new google.maps.Polygon({' % self._objectid)
         w.indent()
-        w.write('clickable: false,')
+        w.write('clickable: true,')
         w.write('geodesic: true,')
         if self._edge_color is not None: w.write('strokeColor: "%s",' % self._edge_color)
         if self._edge_alpha is not None: w.write('strokeOpacity: %f,' % self._edge_alpha)
@@ -50,9 +63,27 @@ class _Polygon(object):
         w.write('map: map,')
         w.write('paths: [')
         w.indent()
-        [w.write('%s,' % point) for point in self._points]            
+        [w.write('%s,' % point) for point in self._points]
         w.dedent()
         w.write(']')
         w.dedent()
         w.write('});')
+        
+        s_texto = '' 
+        if self._text_descripcion is not None: s_texto = s_texto + self._text_descripcion
+        if self._text_tipo is not None: s_texto = s_texto + '\\n - Tipo: ' + self._text_tipo
+        if (self._text_variedad is not None) and (self._text_variedad != self._text_tipo): s_texto = s_texto + '\\n - Variedad: ' + self._text_variedad
+        if self._text_propietario is not None: s_texto = s_texto + '\\n - Propietario: ' + self._text_propietario
+        if self._text_municipio is not None: s_texto = s_texto + '\\n - Municipio: ' + self._text_municipio
+        if self._text_poligono is not None: s_texto = s_texto + '\\n - Polígono: ' + self._text_poligono
+        if self._text_parcela is not None: s_texto = s_texto + '\\n - Parcela: ' + self._text_parcela
+        if (self._text_recinto is not None) and (self._text_recinto != '0'): s_texto = s_texto + '\\n - Recinto: ' + self._text_recinto
+        if self._text_extension is not None: s_texto = s_texto + '\\n - Extensión: ' + self._text_extension
+
+        w.write("google.maps.event.addListener(%s, 'click', function (e) {" % self._objectid)
+        w.indent()
+        w.write('alert("' + s_texto + '")')
+        w.dedent()
+        w.write('});')
+
         w.write()

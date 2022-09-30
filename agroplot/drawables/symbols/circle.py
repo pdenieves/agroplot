@@ -34,8 +34,10 @@ class _Circle(object):
 
         self._face_alpha = kwargs.get('face_alpha')
         
-        self._text_title = info
         self._objectid = 'circle' + str(int(10e6 * random()))
+        self._text_descripcion = info.get('descripcion', None)
+        self._text_tipo = info.get('tipo', None)
+
 
 
     def write(self, w):
@@ -56,14 +58,16 @@ class _Circle(object):
         if self._face_alpha is not None: w.write('fillOpacity: %s,' % self._face_alpha)
         w.write('center: %s,' % self._center)
         w.write('radius: %s,' % self._radius)
-        w.write('text_title: "%s",' % self._text_title)
         w.write('map: map')
         w.dedent()
         w.write('});')
         
+        s_texto = '' 
+        if self._text_descripcion is not None: s_texto = self._text_descripcion
+        
         w.write("google.maps.event.addListener(%s, 'click', function (e) {" % self._objectid)
         w.indent()
-        w.write('alert("Nombre de la parcela: %s")' % self._text_title)
+        w.write('alert("' + s_texto + '")')
         w.dedent()
         w.write('});')
         
