@@ -1,6 +1,6 @@
 import math
 
-from gmplot.drawables.polyline import _Polyline
+from agroplot.drawables.polyline import _Polyline
 
 _EARTH_RADIUS_IN_KM = 6378.8 # TODO: Avoid duplicating this constant.
 

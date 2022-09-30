@@ -12,9 +12,9 @@ def get_requirements(requirements_file):
         return f.read().strip().splitlines()
 
 setup(
-    name = 'gmplot',
+    name = 'agroplot',
     version = __version__,
-    author = 'gmplot contributors',
+    author = 'gmplot contributors / agroplot pdenieves',
     description = 'A matplotlib-like interface to plot data with Google Maps.',
     long_description=read('README.rst'),
     license='MIT',
@@ -22,7 +22,7 @@ setup(
     packages = find_packages(),
     include_package_data=True,
     package_data = {
-        'gmplot': ['markers/*.png'],
+        'agroplot': ['markers/*.png'],
     },
     project_urls = {
         'Documentation': 'https://github.com/gmplot/gmplot/wiki',

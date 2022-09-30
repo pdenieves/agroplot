@@ -1,8 +1,8 @@
 import os
 import warnings
 
-from gmplot.color import _get_hex_color
-from gmplot.utility import _COLOR_ICON_PATH, _get_embeddable_image
+from agroplot.color import _get_hex_color
+from agroplot.utility import _COLOR_ICON_PATH, _get_embeddable_image
 
 class _MarkerIcon(object):
     def __init__(self, color):

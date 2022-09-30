@@ -1,7 +1,7 @@
-from gmplot.utility import _format_LatLng
-from gmplot.drawables.marker_icon import _MarkerIcon
-from gmplot.drawables.marker_info_window import _MarkerInfoWindow
-from gmplot.drawables.raw_marker import _RawMarker
+from agroplot.utility import _format_LatLng
+from agroplot.drawables.marker_icon import _MarkerIcon
+from agroplot.drawables.marker_info_window import _MarkerInfoWindow
+from agroplot.drawables.raw_marker import _RawMarker
 
 class _Marker(object):
     def __init__(self, lat, lng, color, precision, **kwargs):

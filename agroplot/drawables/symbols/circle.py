@@ -1,8 +1,9 @@
-from gmplot.color import _get_hex_color
-from gmplot.utility import _format_LatLng
+from agroplot.color import _get_hex_color
+from agroplot.utility import _format_LatLng
+from random import random
 
 class _Circle(object):
-    def __init__(self, lat, lng, radius, precision, **kwargs):
+    def __init__(self, lat, lng, radius, precision, info, **kwargs):
         '''
         Args:
             lat (float): Latitude of the center of the circle.
@@ -32,6 +33,10 @@ class _Circle(object):
         self._face_color = _get_hex_color(face_color) if face_color is not None else None
 
         self._face_alpha = kwargs.get('face_alpha')
+        
+        self._text_title = info
+        self._objectid = 'circle' + str(int(10e6 * random()))
+
 
     def write(self, w):
         '''
@@ -40,9 +45,9 @@ class _Circle(object):
         Args:
             w (_Writer): Writer used to write the circle.
         '''
-        w.write('new google.maps.Circle({')
+        w.write('%s = new google.maps.Circle({' % self._objectid)
         w.indent()
-        w.write('clickable: false,')
+        w.write('clickable: true,')
         w.write('geodesic: true,')
         if self._edge_color is not None: w.write('strokeColor: "%s",' % self._edge_color)
         if self._edge_alpha is not None: w.write('strokeOpacity: %s,' % self._edge_alpha)
@@ -51,7 +56,15 @@ class _Circle(object):
         if self._face_alpha is not None: w.write('fillOpacity: %s,' % self._face_alpha)
         w.write('center: %s,' % self._center)
         w.write('radius: %s,' % self._radius)
+        w.write('text_title: "%s",' % self._text_title)
         w.write('map: map')
         w.dedent()
         w.write('});')
+        
+        w.write("google.maps.event.addListener(%s, 'click', function (e) {" % self._objectid)
+        w.indent()
+        w.write('alert("Nombre de la parcela: %s")' % self._text_title)
+        w.dedent()
+        w.write('});')
+        
         w.write()

@@ -3,22 +3,22 @@ from __future__ import absolute_import
 import json
 import requests
 
-from gmplot.context import _Context
-from gmplot.utility import StringIO, _get
-from gmplot.writer import _Writer
+from agroplot.context import _Context
+from agroplot.utility import StringIO, _get
+from agroplot.writer import _Writer
 
-from gmplot.drawables.grid import _Grid
-from gmplot.drawables.ground_overlay import _GroundOverlay
-from gmplot.drawables.heatmap import _Heatmap
-from gmplot.drawables.map import _Map
-from gmplot.drawables.marker_dropper import _MarkerDropper
-from gmplot.drawables.marker import _Marker
-from gmplot.drawables.polygon import _Polygon
-from gmplot.drawables.polyline import _Polyline
-from gmplot.drawables.route import _Route
-from gmplot.drawables.symbol import _Symbol
-from gmplot.drawables.symbols.circle import _Circle
-from gmplot.drawables.text import _Text
+from agroplot.drawables.grid import _Grid
+from agroplot.drawables.ground_overlay import _GroundOverlay
+from agroplot.drawables.heatmap import _Heatmap
+from agroplot.drawables.map import _Map
+from agroplot.drawables.marker_dropper import _MarkerDropper
+from agroplot.drawables.marker import _Marker
+from agroplot.drawables.polygon import _Polygon
+from agroplot.drawables.polyline import _Polyline
+from agroplot.drawables.route import _Route
+from agroplot.drawables.symbol import _Symbol
+from agroplot.drawables.symbols.circle import _Circle
+from agroplot.drawables.text import _Text
 
 class GoogleAPIError(Exception):
     pass
@@ -48,7 +48,7 @@ class GoogleMapPlotter(object):
         Args:
             map_type (str): `Map type`_.
             apikey (str): Google Maps `API key`_.
-            title (str): Title of the HTML file (as it appears in the browser tab). Defaults to 'Google Maps - gmplot'.
+            title (str): Title of the HTML file (as it appears in the browser tab). Defaults to 'Google Maps - agroplot'.
             map_styles ([dict]): `Map styles`_. Requires `Maps JavaScript API`_.
             tilt (int): `Tilt`_ of the map upon zooming in.
             scale_control (bool): Whether or not to display the `scale control`_. Defaults to False.
@@ -66,16 +66,16 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.7670, -122.4385, 13, apikey=apikey, map_type='hybrid')
+            gmap = agroplot.GoogleMapPlotter(37.7670, -122.4385, 13, apikey=apikey, map_type='hybrid')
             gmap.draw("map.html")
 
         .. image:: GoogleMapPlotter.png
 
         Further customization and `styling`_::
 
-            import gmplot
+            import agroplot
 
             apikey = '' # (your API key here)
             bounds = {'north': 37.967, 'south': 37.567, 'east': -122.238, 'west': -122.638}
@@ -89,7 +89,7 @@ class GoogleMapPlotter(object):
                 }
             ]
 
-            gmplot.GoogleMapPlotter(
+            agroplot.GoogleMapPlotter(
                 37.766956, -122.438481, 13,
                 apikey=apikey,
                 map_styles=map_styles,
@@ -102,14 +102,14 @@ class GoogleMapPlotter(object):
         .. image:: GoogleMapPlotter_Styled.png
         '''
         self._apikey = _get(kwargs, 'apikey')
-        self._title = _get(kwargs, 'title', 'Google Maps - gmplot')
+        self._title = _get(kwargs, 'title', 'Google Maps - agroplot')
 
         self._map = _Map(
             lat,
             lng,
             zoom,
             _get(kwargs, 'precision', 6),
-            map_type=_get(kwargs, 'map_type'),
+            map_type=_get(kwargs, 'map_type', 'satellite'),
             map_styles=_get(kwargs, 'map_styles'),
             tilt=_get(kwargs, 'tilt'),
             scale_control=_get(kwargs, 'scale_control', False),
@@ -136,7 +136,7 @@ class GoogleMapPlotter(object):
             zoom (int): `Zoom level`_, where 0 is fully zoomed out. Defaults to 13.
             map_type (str): `Map type`_.
             apikey (str): Google Maps `API key`_.
-            title (str): Title of the HTML file (as it appears in the browser tab). Defaults to 'Google Maps - gmplot'.
+            title (str): Title of the HTML file (as it appears in the browser tab). Defaults to 'Google Maps - agroplot'.
             map_styles ([dict]): `Map styles`_. Requires `Maps JavaScript API`_.
             tilt (int): `Tilt`_ of the map upon zooming in.
             scale_control (bool): Whether or not to display the `scale control`_. Defaults to False.
@@ -158,9 +158,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter.from_geocode('Chiyoda City, Tokyo', apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter.from_geocode('Chiyoda City, Tokyo', apikey=apikey)
             gmap.draw("map.html")
 
         .. image:: GoogleMapPlotter.from_geocode.png
@@ -172,7 +172,7 @@ class GoogleMapPlotter(object):
             zoom=_get(kwargs, 'zoom', 13),
             map_type=_get(kwargs, 'map_type'),
             apikey=apikey,
-            title=_get(kwargs, 'title', 'Google Maps - gmplot'),
+            title=_get(kwargs, 'title', 'Google Maps - agroplot'),
             map_styles=_get(kwargs, 'map_styles'),
             tilt=_get(kwargs, 'tilt'),
             scale_control=_get(kwargs, 'scale_control', False),
@@ -203,9 +203,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            location = gmplot.GoogleMapPlotter.geocode('Versailles, France', apikey=apikey)
+            location = agroplot.GoogleMapPlotter.geocode('Versailles, France', apikey=apikey)
             print(location)
 
         .. code-block::
@@ -245,9 +245,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
 
             gmap.text(37.793575, -122.464334, 'Presidio')
             gmap.text(37.766942, -122.441472, 'Buena Vista Park', color='blue')
@@ -286,9 +286,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.425, -122.145, 16, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.425, -122.145, 16, apikey=apikey)
             bounds = {'north': 37.43, 'south': 37.42, 'east': -122.14, 'west': -122.15}
             gmap.grid(bounds, 0.002, 0.0025)
             gmap.draw('map.html')
@@ -328,9 +328,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
 
             gmap.marker(37.793575, -122.464334, label='H', info_window="<a href='https://www.presidio.gov/'>The Presidio</a>")
             gmap.marker(37.768442, -122.441472, color='green', title='Buena Vista Park')
@@ -373,9 +373,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
 
             gmap.directions(
                 (37.799001, -122.442692),
@@ -432,9 +432,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.479481, 15, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.479481, 15, apikey=apikey)
 
             attractions = zip(*[
                 (37.769901, -122.498331),
@@ -521,7 +521,7 @@ class GoogleMapPlotter(object):
                     face_alpha=point_options.get('face_alpha')
                 ))
 
-    def circle(self, lat, lng, radius, **kwargs):
+    def circle(self, lat, lng, radius, dict_info, **kwargs):
         '''
         Plot a circle.
 
@@ -544,9 +544,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
 
             gmap.circle(37.776956, -122.448481, 200)
             gmap.circle(37.792915, -122.427716, 400, face_alpha=0, ew=3, color='red')
@@ -562,6 +562,7 @@ class GoogleMapPlotter(object):
             lng,
             radius,
             _get(kwargs, 'precision', 6),
+            info=dict_info,
             edge_color=_get(kwargs, ['color', 'c', 'edge_color', 'ec'], 'black'),
             edge_alpha=_get(kwargs, ['alpha', 'edge_alpha', 'ea'], 1.0),
             edge_width=_get(kwargs, ['edge_width', 'ew'], 1),
@@ -588,9 +589,9 @@ class GoogleMapPlotter(object):
 
         Usage::
             
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
 
             path = zip(*[
                 (37.773097, -122.471789),
@@ -642,9 +643,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.448481, 14, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.448481, 14, apikey=apikey)
 
             attractions = zip(*[
                 (37.769901, -122.498331),
@@ -700,9 +701,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 12, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 12, apikey=apikey)
 
             url = 'http://explore.museumca.org/creeks/images/TopoSFCreeks.jpg'
             bounds = {'north': 37.832285, 'south': 37.637336, 'east': -122.346922, 'west': -122.520364}
@@ -740,9 +741,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.448481, 14, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.448481, 14, apikey=apikey)
 
             golden_gate_park = zip(*[
                 (37.771269, -122.511015),
@@ -796,9 +797,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
             gmap.enable_marker_dropping(color='orange', draggable=True)
             gmap.draw('map.html')
 
@@ -820,9 +821,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
             gmap.draw('map.html')
 
         .. image:: GoogleMapPlotter.draw.png
@@ -839,9 +840,9 @@ class GoogleMapPlotter(object):
 
         Usage::
 
-            import gmplot
+            import agroplot
             apikey = '' # (your API key here)
-            gmap = gmplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
+            gmap = agroplot.GoogleMapPlotter(37.766956, -122.438481, 13, apikey=apikey)
             print(gmap.get())
 
         .. code-block:: html
@@ -850,7 +851,7 @@ class GoogleMapPlotter(object):
                <head>
                <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
                <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-               <title>Google Maps - gmplot</title>
+               <title>Google Maps - agroplot</title>
                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
                <script type="text/javascript">
                    function initialize() {

@@ -1,5 +1,5 @@
 import unittest
-from gmplot.utility import StringIO
+from agroplot.utility import StringIO
 
 class StringIOTest(unittest.TestCase):
     def test_enter_exit(self):

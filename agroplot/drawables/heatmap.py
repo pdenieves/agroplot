@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from gmplot.utility import _get, _format_LatLng
+from agroplot.utility import _get, _format_LatLng
 
 class _Heatmap(object):
     _DEFAULT_WEIGHT = 1

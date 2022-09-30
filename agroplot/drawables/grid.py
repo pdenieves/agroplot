@@ -1,6 +1,6 @@
 import math
 
-from gmplot.drawables.polyline import _Polyline
+from agroplot.drawables.polyline import _Polyline
 
 class _Grid(object):
     def __init__(self, bounds, lat_increment, lng_increment, precision, **kwargs):

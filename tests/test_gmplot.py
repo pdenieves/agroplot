@@ -1,9 +1,9 @@
 import unittest
 import warnings
-from gmplot.utility import StringIO, _format_LatLng
-from gmplot.writer import _Writer
-from gmplot.drawables.route import _Route
-from gmplot.google_map_plotter import GoogleMapPlotter
+from agroplot.utility import StringIO, _format_LatLng
+from agroplot.writer import _Writer
+from agroplot.drawables.route import _Route
+from agroplot.google_map_plotter import GoogleMapPlotter
 
 class GMPlotTest(unittest.TestCase):
     def test_format_LatLng(self):

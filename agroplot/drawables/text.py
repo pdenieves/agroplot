@@ -1,5 +1,5 @@
-from gmplot.color import _get_hex_color
-from gmplot.utility import _COLOR_ICON_PATH, _format_LatLng, _get_embeddable_image
+from agroplot.color import _get_hex_color
+from agroplot.utility import _COLOR_ICON_PATH, _format_LatLng, _get_embeddable_image
 
 class _Text(object):    
     def __init__(self, lat, lng, text, precision, **kwargs):

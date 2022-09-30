@@ -482,7 +482,7 @@ def _pretty_format_markdown(directory):
                 link = match.groups()[0]
 
                 if link.startswith('\\') or link.startswith('./'): # (make the image path absolute if it's relative)
-                    link = 'https://github.com/gmplot/gmplot/wiki/%s' % link[1:]
+                    link = 'https://github.com/agroplot/agroplot/wiki/%s' % link[1:]
 
                 lines[index] = '[[%s | width = 100000px]]\n' % link
 

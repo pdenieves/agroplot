@@ -1,5 +1,5 @@
-from gmplot.color import _get_hex_color
-from gmplot.utility import _format_LatLng
+from agroplot.color import _get_hex_color
+from agroplot.utility import _format_LatLng
 
 class _Polygon(object):
     def __init__(self, lats, lngs, precision, **kwargs):

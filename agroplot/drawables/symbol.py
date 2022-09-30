@@ -1,6 +1,6 @@
-from gmplot.drawables.symbols.circle import _Circle
-from gmplot.drawables.symbols.plus import _Plus
-from gmplot.drawables.symbols.x import _X
+from agroplot.drawables.symbols.circle import _Circle
+from agroplot.drawables.symbols.plus import _Plus
+from agroplot.drawables.symbols.x import _X
 
 class _Symbol(object):
     _SHAPES = {

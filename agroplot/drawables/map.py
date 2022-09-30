@@ -1,6 +1,6 @@
 import json
 
-from gmplot.utility import _INDENT_LEVEL, _format_LatLng
+from agroplot.utility import _INDENT_LEVEL, _format_LatLng
 
 class _Map(object):
     def __init__(self, lat, lng, zoom, precision, **kwargs):

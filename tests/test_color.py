@@ -1,5 +1,5 @@
 import unittest
-from gmplot.color import _get_hex_color
+from agroplot.color import _get_hex_color
 
 class ColorTest(unittest.TestCase):
     def setUp(self):

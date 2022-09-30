@@ -1,5 +1,5 @@
-from gmplot.drawables.marker_icon import _MarkerIcon
-from gmplot.drawables.raw_marker import _RawMarker
+from agroplot.drawables.marker_icon import _MarkerIcon
+from agroplot.drawables.raw_marker import _RawMarker
 
 class _MarkerDropper(object):
     '''

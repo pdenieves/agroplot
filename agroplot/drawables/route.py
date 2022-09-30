@@ -1,4 +1,4 @@
-from gmplot.utility import _get, _format_LatLng
+from agroplot.utility import _get, _format_LatLng
 
 class _Route(object):
     '''For more info, see Google Maps' `Directions Service https://developers.google.com/maps/documentation/javascript/directions`_.'''

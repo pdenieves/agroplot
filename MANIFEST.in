@@ -1,2 +1,2 @@
-recursive-include gmplot *.png
-recursive-include gmplot *.py
+recursive-include agroplot *.png
+recursive-include agroplot *.py

@@ -1,7 +1,7 @@
 import unittest
 import warnings
-from gmplot.utility import StringIO
-from gmplot.writer import _Writer
+from agroplot.utility import StringIO
+from agroplot.writer import _Writer
 
 def _get_comparison_error_message(output, expected_output):
     return """
