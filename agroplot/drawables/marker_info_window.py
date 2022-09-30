@@ -6,7 +6,7 @@ class _MarkerInfoWindow(object):
         '''
         self._content = content.replace("'", "\\'").replace("\n", "\\n") # (escape single quotes and newlines)
 
-    def write(self, w, context, marker_name):
+    def write(self, w, marker_name):
         '''
         Write the info window that attaches to the given marker on click.
 
@@ -24,7 +24,7 @@ class _MarkerInfoWindow(object):
                 {info_window_name}.open(map, {marker_name});
             }});
         '''.format(
-            info_window_name='info_window_%d' % context.num_info_markers,
+            info_window_name=marker_name,
             marker_name=marker_name,
             content=self._content
         ))

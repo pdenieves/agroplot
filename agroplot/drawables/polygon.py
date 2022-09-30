@@ -5,7 +5,7 @@ from random import random
 class _Polygon(object):
     def __init__(self, lats, lngs, precision, info, **kwargs):
         '''
-        Args:
+        Args:, 
             lats ([float]): Latitudes.
             lngs ([float]): Longitudes.
             precision (int): Number of digits after the decimal to round to for lat/lng values.
@@ -69,6 +69,61 @@ class _Polygon(object):
         w.dedent()
         w.write('});')
         
+        etiqueta = self._make_label()
+
+        if etiqueta != '':
+            window_name = 'info_window_' + str(int(10e6 * random()))
+            w.write('var ' + window_name + ' = new google.maps.InfoWindow();')
+            w.indent()
+            w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')
+            w.write(window_name + '.setContent("' + etiqueta + '"); ')
+            w.write(window_name + '.setPosition(event.latLng); ')
+            w.write(window_name + '.open(map, ' + self._objectid + '); ')
+            w.dedent()
+            w.write('});')
+
+        w.write()
+
+
+    def _make_label(self):
+        h = ""
+        if self._text_descripcion is not None: h = h + "<h3>" + self._text_descripcion + "</h3>"
+        if self._text_tipo is not None: h = h + "<b>Cultivo:</b> " + self._text_tipo + "<br>"
+        if (self._text_variedad is not None) and (self._text_variedad != self._text_tipo): h = h + "<b>Variedad:</b> " + self._text_variedad + "<br>"
+
+        return h
+
+
+
+
+
+
+
+    def write_old_1(self, w):
+        '''
+        Write the polygon.
+
+        Args:
+            w (_Writer): Writer used to write the polygon.
+        '''
+        w.write('%s = new google.maps.Polygon({' % self._objectid)
+        w.indent()
+        w.write('clickable: true,')
+        w.write('geodesic: true,')
+        if self._edge_color is not None: w.write('strokeColor: "%s",' % self._edge_color)
+        if self._edge_alpha is not None: w.write('strokeOpacity: %f,' % self._edge_alpha)
+        if self._edge_width is not None: w.write('strokeWeight: %d,' % self._edge_width)
+        if self._face_color is not None: w.write('fillColor: "%s",' % self._face_color)
+        if self._face_alpha is not None: w.write('fillOpacity: %f,' % self._face_alpha)
+        w.write('map: map,')
+        w.write('paths: [')
+        w.indent()
+        [w.write('%s,' % point) for point in self._points]
+        w.dedent()
+        w.write(']')
+        w.dedent()
+        w.write('});')
+        
         s_texto = '' 
         if self._text_descripcion is not None: s_texto = s_texto + self._text_descripcion
         if self._text_tipo is not None: s_texto = s_texto + '\\n - Tipo: ' + self._text_tipo
@@ -87,3 +142,55 @@ class _Polygon(object):
         w.write('});')
 
         w.write()
+
+
+
+    def write_old_2(self, w):
+        '''
+        Write the polygon.
+
+        Args:
+            w (_Writer): Writer used to write the polygon.
+        '''
+        w.write('%s = new google.maps.Polygon({' % self._objectid)
+        w.indent()
+        w.write('clickable: true,')
+        w.write('geodesic: true,')
+        if self._edge_color is not None: w.write('strokeColor: "%s",' % self._edge_color)
+        if self._edge_alpha is not None: w.write('strokeOpacity: %f,' % self._edge_alpha)
+        if self._edge_width is not None: w.write('strokeWeight: %d,' % self._edge_width)
+        if self._face_color is not None: w.write('fillColor: "%s",' % self._face_color)
+        if self._face_alpha is not None: w.write('fillOpacity: %f,' % self._face_alpha)
+        w.write('map: map,')
+        w.write('paths: [')
+        w.indent()
+        [w.write('%s,' % point) for point in self._points]
+        w.dedent()
+        w.write(']')
+        w.dedent()
+        w.write('});')
+        
+        etiqueta = make_label()
+
+        if etiqueta != '':
+            window_name = 'info_window_' + str(int(10e6 * random()))
+            texto = self._marker_info_window  #.replace("'", "\\'").replace("\n", "\\n")
+            #texto = "<div id='content' style='width:400px; background-color:red;>My Text comes here</div>"
+            
+            w.write('var ' + window_name + ' = new google.maps.InfoWindow();')
+            w.indent()
+            w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')
+            w.write(window_name + '.setContent("' + texto + '"); ')
+            w.write(window_name + '.setPosition(event.latLng); ')
+            w.write(window_name + '.open(map, ' + self._objectid + '); ')
+            w.dedent()
+            w.write('});')
+        else:
+            window_name = 'info_window_' + str(int(10e6 * random()))
+            
+            w.write("google.maps.event.addListener(%s, 'click', function (e) {" % self._objectid)
+            w.indent()
+            w.write('alert("No hay texto: ' + texto + '")')
+            w.dedent()
+            w.write('});')
+       
