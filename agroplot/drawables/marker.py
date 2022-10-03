@@ -25,14 +25,19 @@ class _Marker(object):
         '''
         self._marker_icon = _MarkerIcon(color)
 
-        info_window = kwargs.pop('info_window', None)
-        self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
+        #info_window = kwargs.pop('info_window', None)
+        #self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
+        self._info = kwargs.get('info')
+        info_html = self._make_label()
+        self._marker_info_window = _MarkerInfoWindow(info_html) if info_html != '' else None
 
         self._raw_marker = _RawMarker(
             _format_LatLng(lat, lng, precision),
             self._marker_icon.get_name(),
             **kwargs
-        ) 
+        )
+
+
 
     def write(self, w, context):
         '''
@@ -55,3 +60,13 @@ class _Marker(object):
             self._raw_marker.write(w, marker_name)
             self._marker_info_window.write(w, context, marker_name)
             context.num_info_markers += 1
+
+
+    def _make_label(self):
+        h = ""
+        if self._info is not None:
+            if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
+            rect_html = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('tipo') is not None: h = h + rect_html + " <b>Tipo: </b>" + self._info.get('tipo')
+
+        return h

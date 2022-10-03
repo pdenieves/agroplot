@@ -79,14 +79,17 @@ class _Polygon(object):
         h = ""
         if self._info is not None:
             if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
-            if self._info.get('tipo') is not None: h = h + "<b>Cultivo:</b> " + self._info.get('tipo')
+            rect_tipo = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('tipo') is not None: h = h + rect_tipo + " <b>Cultivo: </b>" + self._info.get('tipo')
             if (self._info.get('variedad') is not None) and (self._info.get('variedad') != self._info.get('tipo')): h = h + " / " + self._info.get('variedad')
-            if self._info.get('propietario') is not None: h = h + "<br><b>Propietario:</b> " + self._info.get('propietario')
-            if self._info.get('municipio') is not None: h = h+ "<br><b>Referencia:</b> " + self._info.get('municipio')
+            rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('propietario') is not None: h = h + "<br>" + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
+            rect_dummy = "<svg width='10' height='9'><rect width='8' height='8' style='fill:white;stroke-width:0;fill-opacity:0;'/></svg> "
+            if self._info.get('municipio') is not None: h = h+ "<br>" + rect_dummy + " <b>Referencia: </b>" + self._info.get('municipio')
             if self._info.get('poligono') is not None: h = h + " / " + self._info.get('poligono')
             if self._info.get('parcela') is not None: h = h + " / " + self._info.get('parcela')
             if (self._info.get('recinto') is not None) and (self._info.get('recinto') != '0'): h = h + " / " +  self._info.get('recinto')
-            if self._info.get('extension') is not None: h = h + "<br><b>Extensión:</b> " + self._info.get('extension')
+            if self._info.get('extension') is not None: h = h + "<br>" + rect_dummy + " <b>Extensión: </b>" + self._info.get('extension')
 
         return h
 

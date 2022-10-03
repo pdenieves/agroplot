@@ -14,9 +14,9 @@ class _RawMarker(object):
         '''
         self._position = position
         self._icon = icon
-        self._title = kwargs.get('title')
-        if(self._title != None):
-            self._title = self._title.replace('\n', '\\n').replace('"', '\\"') 
+        #self._title = kwargs.get('title')
+        #if(self._title != None):
+        #    self._title = self._title.replace('\n', '\\n').replace('"', '\\"') 
         self._label = kwargs.get('label')
         self._draggable = kwargs.get('draggable')
 
@@ -38,7 +38,7 @@ class _RawMarker(object):
         w.indent()
         w.write('position: %s,' % self._position)
         w.write('icon: %s,' % self._icon)
-        if self._title is not None: w.write('title: "%s",' % self._title)
+        #if self._title is not None: w.write('title: "%s",' % self._title)
         if self._label is not None: w.write('label: "%s",' % self._label)
         if self._draggable is True: w.write('draggable: true,')
         w.write('map: map')

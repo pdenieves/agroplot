@@ -78,7 +78,8 @@ class _Circle(object):
         h = ""
         if self._info is not None:
             if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
-            if self._info.get('tipo') is not None: h = h + "<b>Tipo:</b> " + self._info.get('tipo')
+            rect_html = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('tipo') is not None: h = h + rect_html + " <b>Tipo: </b>" + self._info.get('tipo')
 
         return h
 
