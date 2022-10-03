@@ -3,7 +3,7 @@ from agroplot.utility import _format_LatLng
 from random import random
 
 class _Circle(object):
-    def __init__(self, lat, lng, radius, precision, info, **kwargs):
+    def __init__(self, lat, lng, radius, precision, **kwargs):
         '''
         Args:
             lat (float): Latitude of the center of the circle.
@@ -60,16 +60,7 @@ class _Circle(object):
         w.write('map: map')
         w.dedent()
         w.write('});')
-        
-        s_texto = '' 
-        if self._text_descripcion is not None: s_texto = self._text_descripcion
-        
-        w.write("google.maps.event.addListener(%s, 'click', function (e) {" % self._objectid)
-        w.indent()
-        w.write('alert("' + s_texto + '")')
-        w.dedent()
-        w.write('});')
-        
+
         etiqueta = self._make_label()
         if etiqueta != '':
             w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')
@@ -85,15 +76,9 @@ class _Circle(object):
 
     def _make_label(self):
         h = ""
-        if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
-        if self._info.get('tipo') is not None: h = h + "<b>Cultivo:</b> " + self._info.get('tipo')
-        if (self._info.get('variedad') is not None) and (self._info.get('variedad') != self._info.get('tipo')): h = h + " / " + self._info.get('variedad')
-        if self._info.get('propietario') is not None: h = h + "<br><b>Propietario:</b> " + self._info.get('propietario')
-        if self._info.get('municipio') is not None: h = h+ "<br><b>Referencia:</b> " + self._info.get('municipio')
-        if self._info.get('poligono') is not None: h = h + " / " + self._info.get('poligono')
-        if self._info.get('parcela') is not None: h = h + " / " + self._info.get('parcela')
-        if (self._info.get('recinto') is not None) and (self._info.get('recinto') != '0'): h = h + " / " +  self._info.get('recinto')
-        if self._info.get('extension') is not None: h = h + "<br><b>Extensión:</b> " + self._info.get('extension')
+        if self._info is not None:
+            if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
+            if self._info.get('tipo') is not None: h = h + "<b>Tipo:</b> " + self._info.get('tipo')
 
         return h
 
