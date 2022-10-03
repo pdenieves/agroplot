@@ -4,7 +4,7 @@ from agroplot.drawables.marker_info_window import _MarkerInfoWindow
 from agroplot.drawables.raw_marker import _RawMarker
 
 class _Marker(object):
-    def __init__(self, lat, lng, color, precision, **kwargs):
+    def __init__(self, lat, lng, color, precision, info_window, **kwargs):
         '''
         Args:
             lat (float): Latitude of the marker.
@@ -25,8 +25,8 @@ class _Marker(object):
         '''
         self._marker_icon = _MarkerIcon(color)
 
-        info_window = kwargs.pop('info_window', None)
-        #self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
+        #info_window = kwargs.pop('info_window', None)
+        self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
 
         self._raw_marker = _RawMarker(
             _format_LatLng(lat, lng, precision),
