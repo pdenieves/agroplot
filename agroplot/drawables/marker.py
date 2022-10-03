@@ -26,13 +26,14 @@ class _Marker(object):
         self._marker_icon = _MarkerIcon(color)
 
         info_window = kwargs.pop('info_window', None)
-        self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
+        #self._marker_info_window = _MarkerInfoWindow(info_window) if info_window is not None else None
 
         self._raw_marker = _RawMarker(
             _format_LatLng(lat, lng, precision),
             self._marker_icon.get_name(),
             **kwargs
-        ) 
+        )
+
 
     def write(self, w, context):
         '''
@@ -55,3 +56,4 @@ class _Marker(object):
             self._raw_marker.write(w, marker_name)
             self._marker_info_window.write(w, context, marker_name)
             context.num_info_markers += 1
+

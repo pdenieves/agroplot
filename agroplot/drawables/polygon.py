@@ -31,7 +31,7 @@ class _Polygon(object):
         self._face_color = _get_hex_color(face_color) if face_color is not None else None
 
         self._face_alpha = kwargs.get('face_alpha')
-        
+
         self._info = kwargs.get('info')
         self._objectid = 'polygon_' + str(int(10e6 * random()))
 
@@ -61,7 +61,7 @@ class _Polygon(object):
         w.write(']')
         w.dedent()
         w.write('});')
-        
+
         etiqueta = self._make_label()
         if etiqueta != '':
             w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')

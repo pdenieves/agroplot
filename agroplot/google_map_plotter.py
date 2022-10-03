@@ -347,8 +347,8 @@ class GoogleMapPlotter(object):
             _get(kwargs, 'precision', 6),
             title=_get(kwargs, 'title'),
             label=_get(kwargs, 'label'),
-            info_window=_get(kwargs, 'info_window'),
-            draggable=_get(kwargs, 'draggable', False)
+            draggable=_get(kwargs, 'draggable', False),
+            info=_get(kwargs, 'info')
         ))
 
     def directions(self, origin, destination, **kwargs):
