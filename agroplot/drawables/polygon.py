@@ -3,7 +3,7 @@ from agroplot.utility import _format_LatLng
 from random import random
 
 class _Polygon(object):
-    def __init__(self, lats, lngs, precision, info, **kwargs):
+    def __init__(self, lats, lngs, precision, **kwargs):
         '''
         Args:, 
             lats ([float]): Latitudes.
@@ -32,16 +32,18 @@ class _Polygon(object):
 
         self._face_alpha = kwargs.get('face_alpha')
         
+        self._info = kwargs.get('info')
         self._objectid = 'polygon_' + str(int(10e6 * random()))
-        self._text_descripcion = info.get('descripcion', None)
-        self._text_tipo = info.get('tipo', None)
-        self._text_variedad = info.get('variedad', None)
-        self._text_municipio = info.get('municipio', None)
-        self._text_poligono = info.get('poligono', None)
-        self._text_parcela = info.get('parcela', None)
-        self._text_recinto = info.get('recinto', None)
-        self._text_propietario = info.get('propietario', None)
-        self._text_extension = info.get('extension', None)
+
+        #self._text_descripcion = info.get('descripcion', None)
+        #self._text_tipo = info.get('tipo', None)
+        #self._text_variedad = info.get('variedad', None)
+        #self._text_municipio = info.get('municipio', None)
+        #self._text_poligono = info.get('poligono', None)
+        #self._text_parcela = info.get('parcela', None)
+        #self._text_recinto = info.get('recinto', None)
+        #self._text_propietario = info.get('propietario', None)
+        #self._text_extension = info.get('extension', None)
 
 
     def write(self, w):
@@ -70,15 +72,12 @@ class _Polygon(object):
         w.write('});')
         
         etiqueta = self._make_label()
-
         if etiqueta != '':
-            window_name = 'info_window_' + str(int(10e6 * random()))
-            w.write('var ' + window_name + ' = new google.maps.InfoWindow();')
-            w.indent()
             w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')
-            w.write(window_name + '.setContent("' + etiqueta + '"); ')
-            w.write(window_name + '.setPosition(event.latLng); ')
-            w.write(window_name + '.open(map, ' + self._objectid + '); ')
+            w.indent()
+            w.write('infowindow.setContent("' + etiqueta + '"); ')
+            w.write('infowindow.setPosition(event.latLng); ')
+            w.write('infowindow.open(map, ' + self._objectid + '); ')
             w.dedent()
             w.write('});')
 
@@ -87,11 +86,34 @@ class _Polygon(object):
 
     def _make_label(self):
         h = ""
-        if self._text_descripcion is not None: h = h + "<h3>" + self._text_descripcion + "</h3>"
-        if self._text_tipo is not None: h = h + "<b>Cultivo:</b> " + self._text_tipo + "<br>"
-        if (self._text_variedad is not None) and (self._text_variedad != self._text_tipo): h = h + "<b>Variedad:</b> " + self._text_variedad + "<br>"
+        if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
+        if self._info.get('tipo') is not None: h = h + "<b>Cultivo:</b> " + self._info.get('tipo')
+        if (self._info.get('variedad') is not None) and (self._info.get('variedad') != self._info.get('tipo')): h = h + " / " + self._info.get('variedad')
+        if self._info.get('propietario') is not None: h = h + "<br><b>Propietario:</b> " + self._info.get('propietario')
+        if self._info.get('municipio') is not None: h = h+ "<br><b>Referencia:</b> " + self._info.get('municipio')
+        if self._info.get('poligono') is not None: h = h + " / " + self._info.get('poligono')
+        if self._info.get('parcela') is not None: h = h + " / " + self._info.get('parcela')
+        if (self._info.get('recinto') is not None) and (self._info.get('recinto') != '0'): h = h + " / " +  self._info.get('recinto')
+        if self._info.get('extension') is not None: h = h + "<br><b>Extensión:</b> " + self._info.get('extension')
 
         return h
+
+
+    # Se muestran todos los datos en una lista, sin formato
+    def _make_label_list(self):
+        h = ""
+        if self._text_descripcion is not None: h = h + "<h3>" + self._text_descripcion + "</h3>"
+        if self._text_tipo is not None: h = h + "<b>Cultivo:</b> " + self._text_tipo + "<br>"
+        if self._text_variedad is not None: h = h + "<b>Variedad:</b> " + self._text_variedad + "<br>"
+        if self._text_propietario is not None: h = h + "<b>Propietario:</b> " + self._text_propietario + "<br>"
+        if self._text_municipio is not None: h = h + "<b>Municipio:</b> " + self._text_municipio + "<br>"
+        if self._text_poligono is not None: h = h + "<b>Polígono:</b> " + self._text_poligono + "<br>"
+        if self._text_parcela is not None: h = h + "<b>Parcela:</b> " + self._text_parcela + "<br>"
+        if (self._text_recinto is not None) and (self._text_recinto != '0'): h = h + "<b>Recinto:</b> " + self._text_recinto + "<br>"
+        if self._text_extension is not None: h = h + "<b>Extensión:</b> " + self._text_extension + "<br>"
+
+        return h
+
 
 
 

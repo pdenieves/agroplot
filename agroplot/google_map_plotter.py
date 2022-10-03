@@ -719,7 +719,7 @@ class GoogleMapPlotter(object):
             opacity=_get(kwargs, 'opacity', 1.0)
         ))
 
-    def polygon(self, lats, lngs, info, **kwargs):
+    def polygon(self, lats, lngs, **kwargs):
         '''
         Plot a polygon.
 
@@ -769,7 +769,7 @@ class GoogleMapPlotter(object):
             lats,
             lngs,
             _get(kwargs, 'precision', 6),
-            info=info,
+            info=_get(kwargs, 'info'),
             edge_color=_get(kwargs, ['color', 'c', 'edge_color', 'ec'], 'black'),
             edge_alpha=_get(kwargs, ['alpha', 'edge_alpha', 'ea'], 1.0),
             edge_width=_get(kwargs, ['edge_width', 'ew'], 1),

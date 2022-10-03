@@ -53,6 +53,9 @@ class _Map(object):
         w.write('center: %s' % self._center)
         w.dedent()
         w.write('});')
+        w.write('var infowindow = new google.maps.InfoWindow();')
+        w.write('google.maps.event.addListener(map, "click", function() { infowindow.close(); });')
+        
         w.write()
         if self._fit_bounds:
             w.write('map.fitBounds(%s);' % json.dumps(self._fit_bounds))

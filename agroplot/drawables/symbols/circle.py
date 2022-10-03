@@ -34,9 +34,8 @@ class _Circle(object):
 
         self._face_alpha = kwargs.get('face_alpha')
         
-        self._objectid = 'circle' + str(int(10e6 * random()))
-        self._text_descripcion = info.get('descripcion', None)
-        self._text_tipo = info.get('tipo', None)
+        self._info = kwargs.get('info')
+        self._objectid = 'circle_' + str(int(10e6 * random()))
 
 
 
@@ -71,4 +70,30 @@ class _Circle(object):
         w.dedent()
         w.write('});')
         
+        etiqueta = self._make_label()
+        if etiqueta != '':
+            w.write('google.maps.event.addListener(' + self._objectid + ', "click", function(event) { ')
+            w.indent()
+            w.write('infowindow.setContent("' + etiqueta + '"); ')
+            w.write('infowindow.setPosition(event.latLng); ')
+            w.write('infowindow.open(map, ' + self._objectid + '); ')
+            w.dedent()
+            w.write('});')
+
         w.write()
+
+
+    def _make_label(self):
+        h = ""
+        if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
+        if self._info.get('tipo') is not None: h = h + "<b>Cultivo:</b> " + self._info.get('tipo')
+        if (self._info.get('variedad') is not None) and (self._info.get('variedad') != self._info.get('tipo')): h = h + " / " + self._info.get('variedad')
+        if self._info.get('propietario') is not None: h = h + "<br><b>Propietario:</b> " + self._info.get('propietario')
+        if self._info.get('municipio') is not None: h = h+ "<br><b>Referencia:</b> " + self._info.get('municipio')
+        if self._info.get('poligono') is not None: h = h + " / " + self._info.get('poligono')
+        if self._info.get('parcela') is not None: h = h + " / " + self._info.get('parcela')
+        if (self._info.get('recinto') is not None) and (self._info.get('recinto') != '0'): h = h + " / " +  self._info.get('recinto')
+        if self._info.get('extension') is not None: h = h + "<br><b>Extensión:</b> " + self._info.get('extension')
+
+        return h
+
