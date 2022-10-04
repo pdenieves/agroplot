@@ -67,6 +67,8 @@ class _Marker(object):
         if self._info is not None:
             if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
             rect_html = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
-            if self._info.get('tipo') is not None: h = h + rect_html + " <b>Tipo: </b>" + self._info.get('tipo')
-
+            if (self._info.get('tipo') is not None) & (self._info.get('tipo') != ''): h = h + rect_html + " <b>Tipo: </b>" + self._info.get('tipo')
+        else:
+            h = h + "<h3>Localización destacada</h3>"
+            
         return h
