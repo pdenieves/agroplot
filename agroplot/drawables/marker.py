@@ -66,8 +66,18 @@ class _Marker(object):
         h = ""
         if self._info is not None:
             if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
-            rect_html = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
-            if (self._info.get('tipo') is not None) & (self._info.get('tipo') != ''): h = h + rect_html + " <b>Tipo: </b>" + self._info.get('tipo')
+            if self._info.get('tipo_color') == 'white': 
+                s_stroke = '#A0A0A0' 
+            else: 
+                s_stroke = self._info.get('tipo_color')
+            rect_tipo = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:1;stroke:" + s_stroke + ";fill-opacity:0.85;'/></svg> "
+            if (self._info.get('tipo') is not None) & (self._info.get('tipo') != ''): h = h + rect_tipo + " <b>Tipo: </b>" + self._info.get('tipo') + "<br>"
+            if self._info.get('propietario_color') == 'white': 
+                s_stroke_prop = '#A0A0A0' 
+            else: 
+                s_stroke_prop = self._info.get('propietario_color')
+            rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:1;stroke:" + s_stroke_prop + ";fill-opacity:0.85;'/></svg> "
+            if (self._info.get('propietario') is not None) & (self._info.get('propietario') != ''): h = h + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
         else:
             h = h + "<h3>Localización destacada</h3>"
             

@@ -79,10 +79,18 @@ class _Polygon(object):
         h = ""
         if self._info is not None:
             if self._info.get('descripcion') is not None: h = h + "<h3>" + self._info.get('descripcion') + "</h3>"
-            rect_tipo = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('tipo_color') == 'white': 
+                s_stroke = '#A0A0A0' 
+            else: 
+                s_stroke = self._info.get('tipo_color')
+            rect_tipo = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:1;stroke:" + s_stroke + ";fill-opacity:0.85;'/></svg> "
             if self._info.get('tipo') is not None: h = h + rect_tipo + " <b>Cultivo: </b>" + self._info.get('tipo')
             if (self._info.get('variedad') is not None) and (self._info.get('variedad') != self._info.get('tipo')): h = h + " / " + self._info.get('variedad')
-            rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:0;fill-opacity:0.85;'/></svg> "
+            if self._info.get('propietario_color') == 'white': 
+                s_stroke_prop = '#A0A0A0' 
+            else: 
+                s_stroke_prop = self._info.get('propietario_color')
+            rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:1;stroke:" + s_stroke_prop + ";fill-opacity:0.85;'/></svg> "
             if self._info.get('propietario') is not None: h = h + "<br>" + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
             rect_dummy = "<svg width='10' height='9'><rect width='8' height='8' style='fill:white;stroke-width:0;fill-opacity:0;'/></svg> "
             if self._info.get('municipio') is not None: h = h+ "<br>" + rect_dummy + " <b>Referencia: </b>" + self._info.get('municipio')
