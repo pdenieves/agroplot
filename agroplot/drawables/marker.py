@@ -72,13 +72,13 @@ class _Marker(object):
             else: 
                 s_stroke = self._info.get('tipo_color')
             rect_tipo = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('tipo_color') + ";stroke-width:1;stroke:" + s_stroke + ";fill-opacity:0.85;'/></svg> "
-            if (self._info.get('tipo') is not None) & (self._info.get('tipo') != ''): h = h + rect_tipo + " <b>Tipo: </b>" + self._info.get('tipo') + "<br>"
+            if (self._info.get('tipo') is not None) & (self._info.get('tipo') != ''): h = h + rect_tipo + " <b>Tipo: </b>" + self._info.get('tipo')
             if self._info.get('propietario_color') == 'white': 
                 s_stroke_prop = '#A0A0A0' 
             else: 
                 s_stroke_prop = self._info.get('propietario_color')
             rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:1;stroke:" + s_stroke_prop + ";fill-opacity:0.85;'/></svg> "
-            if (self._info.get('propietario') is not None) & (self._info.get('propietario') != ''): h = h + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
+            if (self._info.get('propietario') is not None) & (self._info.get('propietario') != ''): h = h + "<br>" + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
             if self._info.get('latitud') is not None: h = h + "<br>" + rect_dummy  + " <b>Latitud: </b>" + self._info.get('latitud')
             if self._info.get('longitud') is not None: h = h + "<br>" + rect_dummy  + " <b>Longitud: </b>" + self._info.get('longitud')
         else:
