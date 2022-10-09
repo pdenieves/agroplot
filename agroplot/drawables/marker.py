@@ -30,8 +30,6 @@ class _Marker(object):
         self._info = kwargs.get('info')
         info_html = self._make_label()
         self._marker_info_window = _MarkerInfoWindow(info_html) if info_html != '' else None
-        self._lat = lat
-        self._lng = lng
 
         self._raw_marker = _RawMarker(
             _format_LatLng(lat, lng, precision),
@@ -81,10 +79,8 @@ class _Marker(object):
                 s_stroke_prop = self._info.get('propietario_color')
             rect_propietario = "<svg width='10' height='9'><rect width='8' height='8' style='fill:" + self._info.get('propietario_color') + ";stroke-width:1;stroke:" + s_stroke_prop + ";fill-opacity:0.85;'/></svg> "
             if (self._info.get('propietario') is not None) & (self._info.get('propietario') != ''): h = h + rect_propietario + " <b>Propietario: </b>" + self._info.get('propietario')
-            h = h + "<br>" + rect_dummy  + " <b>Latitud: </b>" + round(self.lat, 6)
-            h = h + "<br>" + rect_dummy  + " <b>Longitud: </b>" + round(self.lng, 6)
+            if self._info.get('latitud') is not None: h = h + "<br>" + rect_dummy  + " <b>Latitud: </b>" + self._info.get('latitud')
+            if self._info.get('longitud') is not None: h = h + "<br>" + rect_dummy  + " <b>Longitud: </b>" + self._info.get('longitud')
         else:
             h = h + "<h3>Localización destacada</h3>"
-            h = h + rect_dummy  + " <b>Latitud: </b>" + round(self.lat, 6) + "<br>"
-            h = h + rect_dummy  + " <b>Longitud: </b>" + round(self.lng, 6)
         return h
