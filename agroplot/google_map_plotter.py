@@ -172,7 +172,7 @@ class GoogleMapPlotter(object):
             zoom=_get(kwargs, 'zoom', 13),
             map_type=_get(kwargs, 'map_type'),
             apikey=apikey,
-            title=_get(kwargs, 'title', 'Google Maps - agroplot'),
+            title=_get(kwargs, 'title', 'Google Maps - AgroPlot'),
             map_styles=_get(kwargs, 'map_styles'),
             tilt=_get(kwargs, 'tilt'),
             scale_control=_get(kwargs, 'scale_control', False),
